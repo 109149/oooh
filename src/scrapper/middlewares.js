@@ -45,6 +45,8 @@ const _errorHandler = (error, request, response, next) => {
     return response.status(401).json({ error: error.message });
   else if (error.name === "JsonWebTokenError")
     return response.status(401).json({ error: error.message });
+  else if (error.name === "TimeoutError")
+    return response.status(408).json({ error: error.message });
   // else if (error.name === "markedEmptyContent")
   //   return response.status(400).json({ error: "content must not be empty" });
 
