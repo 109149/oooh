@@ -1,12 +1,21 @@
 import React from "react";
-import { v4 as uuid } from "uuid";
-import { useTrivia } from "./hooks";
+import { _useTrivia, _useImageUrls } from "./hooks";
+import Cards from "../cards/Cards";
+
+/**
+ * ID<String>: {
+ *  trivia: Array<string>,
+ *  spoilers: Array<string>,
+ *  imageUrls: Array<string>,
+ * }
+ */
 
 const cache = {};
 
 function App({ ID }) {
   const [movieID, setMovieID] = React.useState("");
-  const { trivia, id, loading, setId, setLoading } = useTrivia({ ID, cache });
+  const { id, loading, setId, setLoading } = _useTrivia({ ID, cache });
+  _useImageUrls({ ID, cache });
 
   const handleMovieIDChange = (event) => setMovieID(event.target.value);
 
@@ -24,8 +33,12 @@ function App({ ID }) {
       <button onClick={handleSearchByMovieID} type="button">
         Search
       </button>
-      {!loading && trivia.trivia && trivia.trivia.length > 0 ? (
-        trivia.trivia.map((trivia) => <p key={uuid()}>{trivia}</p>)
+      {!loading &&
+      cache[id] &&
+      cache[id].trivia &&
+      cache[id].imageUrls &&
+      cache[id].trivia.length > 0 ? (
+        <Cards contents={cache[id]} />
       ) : (
         <div>Loading ...</div>
       )}
