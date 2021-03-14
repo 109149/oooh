@@ -7,7 +7,7 @@ const puppeteer = require("puppeteer");
  * Scraps trivia text.
  *
  * @param {string} id is the id of the imdb movie.
- * @returns {tuple(string[], string[])} tuple of trivia and spoilers
+ * @returns {Object(string[], string[])} object of trivia and spoilers.
  */
 const scrapTrivia = async (id) => {
   const browser = await puppeteer.launch({
@@ -28,7 +28,7 @@ const scrapTrivia = async (id) => {
 
   await browser.close();
 
-  return [trivia, spoilers];
+  return { trivia, spoilers };
 };
 
 /**
