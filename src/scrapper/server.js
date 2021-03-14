@@ -10,7 +10,7 @@ const app = express();
 if (process.env.NODE_ENV !== "test") app.use(_requestLogger);
 
 app.get("/trivia/:id", async (request, response) => {
-  const [trivia, spoilers] = await scrapTrivia(request.params.id);
+  const { trivia, spoilers } = await scrapTrivia(request.params.id);
   response.json({ trivia, spoilers });
 });
 
