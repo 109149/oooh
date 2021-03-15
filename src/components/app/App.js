@@ -14,15 +14,19 @@ const cache = {};
 
 function App({ ID }) {
   const [movieID, setMovieID] = React.useState("");
-  const { id, loading, setId, setLoading } = useTrivia({ ID, cache });
-  useImageUrls({ ID, cache });
+  let { ...imageUrlHookResult } = useImageUrls({ ID, cache });
+  let { ...triviaHookResult } = useTrivia({ ID, cache });
+  let loading = imageUrlHookResult.loading && triviaHookResult.loading;
+  let id = triviaHookResult.id;
 
   const handleMovieIDChange = (event) => setMovieID(event.target.value);
 
   const handleSearchByMovieID = () => {
     if (movieID !== id) {
-      setLoading(true);
-      setId(movieID);
+      imageUrlHookResult.setLoading(true);
+      triviaHookResult.setLoading(true);
+      imageUrlHookResult.setId(movieID);
+      triviaHookResult.setId(movieID);
       setMovieID("");
     }
   };
