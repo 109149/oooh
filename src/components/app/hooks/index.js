@@ -16,6 +16,8 @@ const useImageUrls = ({ ID, cache }) => {
   const [id, setId] = React.useState(ID);
 
   React.useEffect(() => {
+    // if (process.env.NODE_ENV === "development")
+    //   console.log("useImageUrls Effect");
     if (id) {
       if (!cache[id]) {
         fetch(`/imageUrls/${id}`)
@@ -85,6 +87,7 @@ const useTrivia = ({ ID, cache }) => {
   const [id, setId] = React.useState(ID);
 
   React.useEffect(() => {
+    // if (process.env.NODE_ENV === "development") console.log("useTrivia Effect");
     if (id) {
       if (!cache[id]) {
         fetch(`/trivia/${id}`)
