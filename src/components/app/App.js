@@ -1,5 +1,5 @@
 import React from "react";
-import { _useTrivia, _useImageUrls } from "./hooks";
+import { useTrivia, useImageUrls } from "./hooks";
 import Cards from "../cards/Cards";
 
 /**
@@ -14,8 +14,8 @@ const cache = {};
 
 function App({ ID }) {
   const [movieID, setMovieID] = React.useState("");
-  const { id, loading, setId, setLoading } = _useTrivia({ ID, cache });
-  _useImageUrls({ ID, cache });
+  const { id, loading, setId, setLoading } = useTrivia({ ID, cache });
+  useImageUrls({ ID, cache });
 
   const handleMovieIDChange = (event) => setMovieID(event.target.value);
 
@@ -23,6 +23,7 @@ function App({ ID }) {
     if (movieID !== id) {
       setLoading(true);
       setId(movieID);
+      setMovieID("");
     }
   };
 
