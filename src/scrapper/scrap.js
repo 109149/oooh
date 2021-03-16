@@ -83,7 +83,8 @@ const scrapImageUrls = async (id) => {
           .map(
             (url) => url.split("_V1_")[0]
           ) /* remove crop indicator for url */
-          .map((url) => [url, "jpg"].join("")); /* full sized image urls */
+          .map((url) => [url, "_V1_UY800_CR0,0,1200,800_AL_"].join(""))
+          .map((url) => [url, ".jpg"].join(""));
       }
     );
     return tmp;
