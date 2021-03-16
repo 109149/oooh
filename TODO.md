@@ -8,5 +8,9 @@
 - [ ] gh-pages + CD
 - [ ] TimeoutError
 - [ ] crop text; add button to open modal;
-- [ ] add loading component
-- [ ] img optimization;
+- [x] add loading component
+- [x] img optimization; well...kinda...
+- [ ] dark mode;
+- [ ] add recent searches.
+- [ ] reduce number of requests per second...
+- [ ] add function (+endpoint) to retrieve full sized image.
