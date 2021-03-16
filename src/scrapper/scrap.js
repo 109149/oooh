@@ -63,7 +63,8 @@ const scrapImageUrls = async (id) => {
     return div.textContent.split(" ")[2]; // "1-48 of 333 photos", we need 333
   });
   // calculates how many pages are there
-  const numberOfPages = (numberOfImages / 48) | 1; // there are 48 images per page
+  let numberOfPages = (numberOfImages / 48) | 1; // there are 48 images per page
+  numberOfPages = numberOfPages > 3 ? 3 : numberOfPages; // limit number of pages...for now...
 
   // url template for different pages
   const pagedURL = (url, page) => `${url}?page=${page}`;
