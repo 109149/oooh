@@ -1,6 +1,6 @@
 import React from "react";
 import { useTrivia, useImageUrls } from "./hooks";
-import Cards from "../cards/Cards";
+import { Cards, Loading } from "../";
 
 /**
  * ID<String>: {
@@ -18,6 +18,10 @@ function App({ ID }) {
   let { ...triviaHookResult } = useTrivia({ ID, cache });
   let loading = imageUrlHookResult.loading && triviaHookResult.loading;
   let id = triviaHookResult.id;
+
+  // let imageUrlHookResult, triviaHookResult;
+  // let id = "";
+  // let loading = false;
 
   const handleMovieIDChange = (event) => setMovieID(event.target.value);
 
@@ -45,7 +49,7 @@ function App({ ID }) {
       cache[id].trivia.length > 0 ? (
         <Cards contents={cache[id]} />
       ) : (
-        <div>Loading ...</div>
+        <Loading />
       )}
     </>
   );
