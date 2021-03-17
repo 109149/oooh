@@ -2,6 +2,132 @@ import React from "react";
 
 /**
  * @author 109149
+ * @time Wed 17 Mar 2021 23:37:30 +04
+ *
+ * Hook for toggling dark mode. Prioritizes localStorage's value.
+ *
+ * @return {tuple} enabled - whether user wants dark mode or not, and
+ * setIsDarkModeEnabled - setter for localStorage dark mode.
+ */
+const useDarkMode = () => {
+  const [isDarkModeEnabled, setIsDarkModeEnabled] = useLocalStorage(
+    "oooh-dark-mode"
+  );
+  const prefersDarkMode = usePrefersDarkMode();
+  const enabled = isDarkModeEnabled ?? prefersDarkMode;
+
+  React.useEffect(() => {
+    const body = document.body;
+    if (enabled) body.setAttribute("data-theme", "dark");
+    else body.setAttribute("data-theme", "light");
+  }, [enabled]);
+
+  return [enabled, setIsDarkModeEnabled];
+};
+
+/**
+ * @author 109149
+ * @time Wed 17 Mar 2021 23:21:49 +04
+ *
+ * Gets prefers-color-scheme media query.
+ *
+ * @return {boolean} prefersDarkMode is true if prefers-color-scheme media
+ * query is set to dark.
+ */
+const usePrefersDarkMode = () => {
+  let mql = window.matchMedia("(prefers-color-scheme: dark)");
+  const [prefersDarkMode, setPrefersDarkMode] = React.useState(false);
+
+  const handler = (e) => {
+    setPrefersDarkMode(e.matches);
+  };
+
+  useEventListener("change", handler, mql);
+
+  return prefersDarkMode;
+};
+
+/**
+ * @author 109149
+ * @time Wed 17 Mar 2021 21:59:28 +04
+ *
+ * Hook for adding/removing event listener on element.
+ *
+ * @inspiredBy usehooks.com/useEventListener
+ *
+ * @param {string} eventName is the event to listen to.
+ * @param {function} eventHandler is the function to dispatch when event occurs.
+ * @param {Element} element is the target to attach the event listener to.
+ */
+const useEventListener = (eventName, eventHandler, element = window) => {
+  const handler = React.useRef();
+
+  React.useEffect(() => {
+    handler.current = eventHandler;
+  }, [eventHandler]);
+
+  React.useEffect(() => {
+    const valid = element && element.addEventListener;
+    if (!valid) return;
+
+    const _eventHandler = (event) => handler.current(event);
+
+    element.addEventListener(eventName, _eventHandler);
+
+    return () => element.removeEventListener(eventName, _eventHandler);
+  }, [eventName, element]);
+};
+
+/**
+ * @author 109149
+ * @time Wed 17 Mar 2021 20:54:39 +04
+ *
+ * Toggles between true and false.
+ *
+ * @param {string} initialValue is initial value to set.
+ * @return {tuple} state and its dispatcher.
+ */
+const useToggle = (initialValue = false) => {
+  return React.useReducer((state) => !state, initialValue);
+};
+
+/**
+ * @author 109149
+ * @time Wed 17 Mar 2021 20:48:40 +04
+ *
+ * "Mimics" React.useState; Sets/gets localstorage value.
+ *
+ * @inspiredBy usehooks.com/useLocalStorage
+ *
+ * @param {string} key is localStorage item key.
+ * @param {string} initialValue is localStorage item's initial value.
+ * @return {tuple} item value and its setter.
+ */
+const useLocalStorage = (key, initialValue) => {
+  const [state, setState] = React.useState(() => {
+    try {
+      const value = window.localStorage.getItem(key);
+      return value && value !== "undefined" ? JSON.parse(value) : initialValue;
+    } catch (e) {
+      console.error(e);
+      return initialValue;
+    }
+  });
+
+  const setValue = (value) => {
+    try {
+      setState(value);
+      window.localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  return [state, setValue];
+};
+
+/**
+ * @author 109149
  * @time Sun 14 Mar 2021 22:50:59 +04
  *
  * Fetches image urls from server.
@@ -79,7 +205,7 @@ const _useImageUrls = ({ ID, cache }) => {
  *
  * @param {string} ID is the movie id.
  * @param {object} cache is the fetched trivia to cache.
- * @returns {object} trivia, id, loading, setId, setLoading.
+ * @return {object} trivia, id, loading, setId, setLoading.
  */
 const useTrivia = ({ ID, cache }) => {
   const [trivia, setTrivia] = React.useState({}); // {trivia, spoilers}
@@ -146,4 +272,14 @@ const _useTrivia = ({ ID, cache }) => {
   return { trivia, id, loading, setId, setLoading };
 };
 
-export { useTrivia, _useTrivia, useImageUrls, _useImageUrls };
+export {
+  useTrivia,
+  _useTrivia,
+  useImageUrls,
+  _useImageUrls,
+  useLocalStorage,
+  useToggle,
+  useEventListener,
+  usePrefersDarkMode,
+  useDarkMode,
+};
