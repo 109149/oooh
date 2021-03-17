@@ -17,3 +17,4 @@
 
 - [ ] distribute hooks
 - [ ] add svg icons for theme toggler
+- [ ] fix useDarkMode hook assigning 'undefined'
