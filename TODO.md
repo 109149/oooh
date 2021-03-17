@@ -10,7 +10,10 @@
 - [ ] crop text; add button to open modal;
 - [x] add loading component
 - [x] img optimization; well...kinda...
-- [ ] dark mode;
+- [x] dark mode;
 - [ ] add recent searches.
 - [ ] reduce number of requests per second...
 - [ ] add function (+endpoint) to retrieve full sized image.
+
+- [ ] distribute hooks
+- [ ] add svg icons for theme toggler
