@@ -1,6 +1,6 @@
 import React from "react";
-import { useTrivia, useImageUrls } from "./hooks";
-import { Cards, Loading } from "../";
+import { Cards, Loading, ThemeToggler } from "../";
+import { useImageUrls, useTrivia } from "./hooks";
 
 /**
  * ID<String>: {
@@ -9,7 +9,6 @@ import { Cards, Loading } from "../";
  *  imageUrls: Array<string>,
  * }
  */
-
 const cache = {};
 
 function App({ ID }) {
@@ -42,6 +41,7 @@ function App({ ID }) {
       <button onClick={handleSearchByMovieID} type="button">
         Search
       </button>
+      <ThemeToggler />
       {!loading &&
       cache[id] &&
       cache[id].trivia &&
