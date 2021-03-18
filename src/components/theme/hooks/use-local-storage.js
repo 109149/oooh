@@ -16,15 +16,16 @@ const useLocalStorage = (key, initialValue) => {
   const [state, setState] = React.useState(() => {
     try {
       const value = window.localStorage.getItem(key);
-      return value && value !== "undefined" ? JSON.parse(value) : initialValue;
+      return value ? JSON.parse(value) : initialValue;
     } catch (e) {
       console.error(e);
       return initialValue;
     }
   });
 
-  const setValue = (value) => {
+  const setValue = (_value) => {
     try {
+      const value = typeof _value === "function" ? _value(state) : _value;
       setState(value);
       window.localStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
