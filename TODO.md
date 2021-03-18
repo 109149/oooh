@@ -15,6 +15,6 @@
 - [ ] reduce number of requests per second...
 - [ ] add function (+endpoint) to retrieve full sized image.
 
-- [ ] distribute hooks
+- [x] distribute hooks
 - [ ] add svg icons for theme toggler
-- [ ] fix useDarkMode hook assigning 'undefined'
+- [ ] ~~fix useDarkMode hook assigning 'undefined'~~
