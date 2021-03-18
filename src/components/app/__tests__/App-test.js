@@ -29,6 +29,18 @@ describe("<App />", function () {
     }
   };
 
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
+
   beforeAll(() => {
     jest.spyOn(window, "fetch");
   });
@@ -51,7 +63,7 @@ describe("<App />", function () {
 
     // assert initial DOM
     expect(screen.getByRole(/textbox/)).toHaveValue("");
-    expect(screen.getAllByRole(/button/)).toHaveLength(5);
+    expect(screen.getAllByRole(/button/)).toHaveLength(6); // 1 search button, 1 theme toggler, 4 data button
 
     // assert initial state
     expect(screen.getAllByText(/trivia/)).toHaveLength(4);
