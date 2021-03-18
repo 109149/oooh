@@ -34,7 +34,7 @@ function App({ ID }) {
     }
   };
 
-  if (process.env.NODE_ENV === "development") console.log("render");
+  // if (process.env.NODE_ENV === "development") console.log("render");
   return (
     <>
       <input type="text" value={movieID} onChange={handleMovieIDChange} />
