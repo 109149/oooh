@@ -1,12 +1,13 @@
 :root {
-  --background-color: radial-gradient(#e26d5c, #723d46);
-  --color: rgb(5, 5, 5);
-  --loading-color: #ffe1a8;
+  --background-color: radial-gradient(#ffe1a8, #e26d5c);
+  --color: rgb(250, 250, 250);
+  --loading-color: #472d30;
 }
 
 [data-theme="dark"] {
-  --color: rgb(250, 250, 250);
-  --loading-color: #472d30;
+  --background-color: radial-gradient(#e26d5c, #723d46);
+  --color: rgb(5, 5, 5);
+  --loading-color: #ffe1a8;
 }
 
 body {
